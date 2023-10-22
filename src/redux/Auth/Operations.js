@@ -12,13 +12,13 @@ const clearAuthHeader = () => {
 };
 
 export const register = createAsyncThunk(
-  'auth/register',
+  '/auth/signup',
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post('/users/signup', credentials);
-
-      setAuthHeader(res.data.token);
-      return res.data;
+      const { data } = await axios.post('/users/signup', credentials);
+      console.log(credentials);
+      setAuthHeader(data.token);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
@@ -26,20 +26,20 @@ export const register = createAsyncThunk(
 );
 
 export const logIn = createAsyncThunk(
-  'auth/login',
+  '/auth/login',
   async (credentials, thunkAPI) => {
     try {
-      const res = await axios.post('/users/login', credentials);
+      const { data } = await axios.post('/users/login', credentials);
 
-      setAuthHeader(res.data.token);
-      return res.data;
+      setAuthHeader(data.token);
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }
   }
 );
 
-export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
+export const logOut = createAsyncThunk('/auth/logout', async (_, thunkAPI) => {
   try {
     await axios.post('/users/logout');
     clearAuthHeader();
@@ -49,18 +49,18 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
 });
 
 export const refreshUser = createAsyncThunk(
-  'auth/refresh',
+  '/auth/refresh',
   async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
+    const { token } = thunkAPI.getState();
 
-    if (!state) {
+    if (!token) {
       return thunkAPI.rejectWithValue('Unable to fetch user');
     }
 
     try {
-      setAuthHeader(state);
-      const res = await axios.get('/users/current');
-      return res.data;
+      setAuthHeader(token);
+      const { data } = await axios.get('/users/current');
+      return data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
     }

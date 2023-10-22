@@ -1,12 +1,14 @@
-import { NavLink } from 'react-router-dom';
+import { Container, Text, StyledNavLink } from './Home.styled';
+import { CheckIcon } from '@chakra-ui/icons';
 
 export default function HomePage() {
   return (
-    <div>
-      <h1>Phonebook</h1>
+    <Container>
+      <Text>Phonebook</Text>
       <button>
-        <NavLink to="/contacts">Let's start</NavLink>
+        <StyledNavLink to="/contacts">Lets start</StyledNavLink>
+        <CheckIcon color="black"></CheckIcon>
       </button>
-    </div>
+    </Container>
   );
 }

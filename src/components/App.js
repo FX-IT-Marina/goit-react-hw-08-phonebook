@@ -44,14 +44,3 @@ export function App() {
     </Routes>
   );
 }
-
-//   return (
-//     <FormContainer>
-//       <Title>Phonebook</Title>
-//       <ContactForm />
-//       <Title>Contacts</Title>
-//       <Filter />
-//       <ContactList />
-//     </FormContainer>
-//   );
-// }

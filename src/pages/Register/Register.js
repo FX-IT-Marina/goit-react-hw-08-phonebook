@@ -1,9 +1,10 @@
 import { RegisterForm } from 'components/RegisterForm/RegisterForm';
+import { Container } from './Register.styled';
 
 export default function RegisterPage() {
   return (
-    <div>
+    <Container>
       <RegisterForm />
-    </div>
+    </Container>
   );
 }

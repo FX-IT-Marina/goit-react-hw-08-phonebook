@@ -1,5 +1,7 @@
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/Auth/Operations';
+import { Form, Label, Input } from '../LoginForm/LoginForm.styled';
+import { LabelText, ButtonText } from './RegisterForm.styled';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
@@ -7,6 +9,7 @@ export const RegisterForm = () => {
   const handleSubmit = e => {
     e.preventDefault();
     const form = e.currentTarget;
+    console.log('Form submitted!');
     dispatch(
       register({
         name: form.elements.name.value,
@@ -17,20 +20,20 @@ export const RegisterForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} autoComplete="off">
-      <label>
-        Username
-        <input type="text" name="name" />
-      </label>
-      <label>
-        Email
-        <input type="email" name="email" />
-      </label>
-      <label>
-        Password
-        <input type="password" name="password" />
-      </label>
-      <button type="submit">Register</button>
-    </form>
+    <Form onSubmit={handleSubmit} autoComplete="off">
+      <Label>
+        <LabelText>Username</LabelText>
+        <Input type="text" name="name" />
+      </Label>
+      <Label>
+        <LabelText>Email</LabelText>
+        <Input type="email" name="email" />
+      </Label>
+      <Label>
+        <LabelText>Password</LabelText>
+        <Input type="password" name="password" />
+      </Label>
+      <ButtonText type="submit">Sign up</ButtonText>
+    </Form>
   );
 };

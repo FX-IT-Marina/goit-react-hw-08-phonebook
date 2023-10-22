@@ -9,7 +9,6 @@ const authSlice = createSlice({
     isLoggedIn: false,
     isRefreshing: false,
   },
-
   extraReducers: builder =>
     builder
       .addCase(register.fulfilled, (state, { payload }) => {

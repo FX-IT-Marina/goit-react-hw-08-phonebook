@@ -1,8 +1,15 @@
-import React from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Formik, ErrorMessage } from 'formik';
 import { object, string } from 'yup';
-import { Error, StyledForm, Button, Label, Input } from './ContactForm.styled';
+import {
+  Error,
+  StyledForm,
+  Button,
+  Label,
+  Input,
+  LabelText,
+} from './ContactForm.styled';
 import { addContact } from 'redux/operation';
 import { selectContacts } from 'redux/selectors';
 
@@ -15,6 +22,7 @@ const FormError = ({ name }) => {
 export const ContactForm = () => {
   const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
+  const [isLoading, setIsLoading] = useState(false);
 
   const initialValues = {
     name: '',
@@ -26,14 +34,16 @@ export const ContactForm = () => {
     number: string().required(),
   });
 
-  const handleSubmit = (values, { resetForm }) => {
+  const handleSubmit = async (values, { resetForm }) => {
     const duplicate = contacts.some(
       ({ name }) => name.toLowerCase() === values.name.toLowerCase()
     );
     if (duplicate) {
       return alert(`${values.name} is already in contacts`);
     }
-    dispatch(addContact(values));
+    setIsLoading(true);
+    await dispatch(addContact(values));
+    setIsLoading(false);
     resetForm();
   };
 
@@ -45,12 +55,12 @@ export const ContactForm = () => {
     >
       <StyledForm>
         <Label>
-          Name
+          <LabelText>Name</LabelText>
           <Input type="text" name="name" />
           <FormError name="name" />
         </Label>
         <Label>
-          Number
+          <LabelText>Number</LabelText>
           <Input type="tel" name="number" />
           <FormError name="number" />
         </Label>
