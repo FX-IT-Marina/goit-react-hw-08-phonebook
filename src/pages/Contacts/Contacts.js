@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchContacts } from 'redux/operation';
 import { ContactForm } from 'components/ContactForm/ContactForm';
@@ -9,17 +9,7 @@ import { selectIsLoading } from 'redux/selectors';
 
 export default function ContactsPage() {
   const dispatch = useDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [contactId, setContactId] = useState('');
   const isLoading = useSelector(selectIsLoading);
-
-  const handleToggleModal = contactId => {
-    setIsModalOpen(!isModalOpen);
-    if (!isModalOpen) {
-      console.log(contactId);
-      setContactId(contactId);
-    }
-  };
 
   useEffect(() => {
     dispatch(fetchContacts());
@@ -29,11 +19,7 @@ export default function ContactsPage() {
     <div>
       <ContactForm />
       <Filter />
-      {isLoading ? (
-        <Spinner color="orange.500" />
-      ) : (
-        <ContactList handleModal={handleToggleModal} />
-      )}
+      {isLoading ? <Spinner color="orange.500" /> : <ContactList />}
     </div>
   );
 }

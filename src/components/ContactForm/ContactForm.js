@@ -64,7 +64,15 @@ export const ContactForm = () => {
           <Input type="tel" name="number" />
           <FormError name="number" />
         </Label>
-        <Button type="submit">Add contact</Button>
+        <Button
+          isLoading={isLoading}
+          loadingText="Submitting"
+          colorScheme="telegram"
+          variant="outline"
+          type="submit"
+        >
+          Add contact
+        </Button>
       </StyledForm>
     </Formik>
   );
